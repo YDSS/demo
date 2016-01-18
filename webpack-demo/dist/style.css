@@ -1,0 +1,9 @@
+.foo {
+    color: black;
+}
+#wrapper {
+  font-size: 20px; }
+  #wrapper .hello {
+    color: green; }
+
+/*# sourceMappingURL=style.css.map*/
