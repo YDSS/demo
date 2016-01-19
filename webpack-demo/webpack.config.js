@@ -2,7 +2,8 @@ var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-var entry = './src/index.js';
+// var entry = './src/index.js';
+var entry = './src/redux/index.js';
 
 var config = {
     entry: {
