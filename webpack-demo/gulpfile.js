@@ -63,7 +63,7 @@ gulp.task('webpack-dev-server', function (done) {
     var myConf = Object.create(webpackConf);
     // --inline的node api写法
     myConf.entry.app.unshift("webpack-dev-server/client?http://localhost:8080");
-    myConf.devtool = 'eval';
+    myConf.devtool = 'source-map';
     myConf.debug = true;
     myConf.plugins = webpackConf.plugins.concat(
         // 加上热替换组件

@@ -1,12 +1,12 @@
-import {combineReducer} from 'redux';
+import { combineReducers } from 'redux';
 
 function count(state = {number: 0}, action) {
     return Object.assign({}, state, {
-        number: state.number++
+        number: ++state.number
     });
 }
 
-const rootReducer = combineReducer({
+const rootReducer = combineReducers({
     count
 });
 

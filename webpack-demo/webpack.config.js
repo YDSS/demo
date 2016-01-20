@@ -3,7 +3,7 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 // var entry = './src/index.js';
-var entry = './src/redux/index.js';
+var entry = './src/redux-webpack/index.js';
 
 var config = {
     entry: {
@@ -27,6 +27,17 @@ var config = {
         }, {
             test: /\.css$/,
             loader: ExtractTextPlugin.extract('css')
+        }, {
+            test: /\.less$/,
+            loader: ExtractTextPlugin.extract('css!less')
+        }, {
+            // font-awesome
+            test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
+            loader: "url-loader?limit=10000&mimetype=application/font-woff" 
+        }, {
+            // font-awesome
+            test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
+            loader: "file-loader" 
         }]
     },
     plugins: [
