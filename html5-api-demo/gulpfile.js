@@ -5,7 +5,7 @@ var paths = require('./conf');
 var webpackDevServer = require('webpack-dev-server');
 var webpackConf = require('./webpack.config');
 
-gulp.task('default', ['webpack-dev-server']);
+gulp.task('default', ['webpack-dev-server', 'html-watch']);
 // build development
 gulp.task('build-dev', ['webpack:build-dev'], function () {
     gulp.watch(['app/**/*'], ['webpack:build-dev']);
@@ -65,7 +65,11 @@ gulp.task('html', function () {
         .pipe(gulp.dest(paths.DIST));
 });
 
-gulp.task('webpack-dev-server', ['html'], function (done) {
+gulp.task('html-watch', function () {
+    gulp.watch(paths.HTML, ['html']);
+});
+
+gulp.task('webpack-dev-server', function (done) {
     var myConf = Object.create(webpackConf);
     // --inline的node api写法
     myConf.entry.app.unshift("webpack-dev-server/client?http://localhost:8080");
