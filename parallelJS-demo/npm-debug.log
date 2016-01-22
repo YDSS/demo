@@ -1,0 +1,81 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'paralleljs',
+1 verbose cli   '--save',
+1 verbose cli   '--verbose' ]
+2 info using npm@3.5.2
+3 info using node@v0.12.2
+4 verbose node symlink /usr/local/bin/node
+5 silly loadCurrentTree Starting
+6 silly install loadCurrentTree
+7 silly install readLocalPackageData
+8 silly fetchPackageMetaData paralleljs
+9 silly fetchNamedPackageData paralleljs
+10 silly mapToRegistry name paralleljs
+11 silly mapToRegistry using default registry
+12 silly mapToRegistry registry http://r.cnpmjs.org/
+13 silly mapToRegistry uri http://r.cnpmjs.org/paralleljs
+14 verbose request uri http://r.cnpmjs.org/paralleljs
+15 verbose request no auth needed
+16 info attempt registry request try #1 at 16:45:41
+17 verbose request id 5d8b462e03866b9e
+18 http request GET http://r.cnpmjs.org/paralleljs
+19 http 200 http://r.cnpmjs.org/paralleljs
+20 verbose headers { server: 'nginx/1.4.6 (Ubuntu)',
+20 verbose headers   date: 'Fri, 22 Jan 2016 08:45:41 GMT',
+20 verbose headers   'content-type': 'application/json; charset=utf-8',
+20 verbose headers   'transfer-encoding': 'chunked',
+20 verbose headers   connection: 'keep-alive',
+20 verbose headers   'x-readtime': '9',
+20 verbose headers   'content-encoding': 'gzip' }
+21 silly get cb [ 200,
+21 silly get   { server: 'nginx/1.4.6 (Ubuntu)',
+21 silly get     date: 'Fri, 22 Jan 2016 08:45:41 GMT',
+21 silly get     'content-type': 'application/json; charset=utf-8',
+21 silly get     'transfer-encoding': 'chunked',
+21 silly get     connection: 'keep-alive',
+21 silly get     'x-readtime': '9',
+21 silly get     'content-encoding': 'gzip' } ]
+22 verbose get saving paralleljs to /Users/yangdongsheng/.npm/r.cnpmjs.org/paralleljs/.cache.json
+23 silly fetchPackageMetaData Error: No compatible version found: paralleljs
+23 silly fetchPackageMetaData Valid install targets:
+23 silly fetchPackageMetaData 0.2.0
+23 silly fetchPackageMetaData
+23 silly fetchPackageMetaData     at pickVersionFromRegistryDocument (/usr/local/lib/node_modules/npm/lib/fetch-package-metadata.js:156:16)
+23 silly fetchPackageMetaData     at /usr/local/lib/node_modules/npm/node_modules/iferr/index.js:13:50
+23 silly fetchPackageMetaData     at /usr/local/lib/node_modules/npm/lib/utils/pulse-till-done.js:19:8
+23 silly fetchPackageMetaData     at saved (/usr/local/lib/node_modules/npm/lib/cache/caching-client.js:168:7)
+23 silly fetchPackageMetaData     at /usr/local/lib/node_modules/npm/node_modules/graceful-fs/polyfills.js:210:7
+23 silly fetchPackageMetaData     at FSReqWrap.oncomplete (fs.js:95:15)
+23 silly fetchPackageMetaData  error for paralleljs [Error: No compatible version found: paralleljs
+23 silly fetchPackageMetaData Valid install targets:
+23 silly fetchPackageMetaData 0.2.0
+23 silly fetchPackageMetaData ]
+24 silly rollbackFailedOptional Starting
+25 silly rollbackFailedOptional Finishing
+26 silly runTopLevelLifecycles Starting
+27 silly runTopLevelLifecycles Finishing
+28 silly install printInstalled
+29 verbose stack Error: No compatible version found: paralleljs
+29 verbose stack Valid install targets:
+29 verbose stack 0.2.0
+29 verbose stack
+29 verbose stack     at pickVersionFromRegistryDocument (/usr/local/lib/node_modules/npm/lib/fetch-package-metadata.js:156:16)
+29 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/iferr/index.js:13:50
+29 verbose stack     at /usr/local/lib/node_modules/npm/lib/utils/pulse-till-done.js:19:8
+29 verbose stack     at saved (/usr/local/lib/node_modules/npm/lib/cache/caching-client.js:168:7)
+29 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/graceful-fs/polyfills.js:210:7
+29 verbose stack     at FSReqWrap.oncomplete (fs.js:95:15)
+30 verbose cwd /Users/yangdongsheng/Projects/private/demo/parallelJS-demo
+31 error Darwin 15.3.0
+32 error argv "node" "/usr/local/bin/npm" "install" "paralleljs" "--save" "--verbose"
+33 error node v0.12.2
+34 error npm  v3.5.2
+35 error No compatible version found: paralleljs
+35 error Valid install targets:
+35 error 0.2.0
+36 error If you need help, you may report this error at:
+36 error     <https://github.com/npm/npm/issues>
+37 verbose exit [ 1, true ]
