@@ -1,5 +1,5 @@
 module.exports = {
     DIST: './dist',
-    ENTRY: './src/index.js',
+    ENTRY: './src/app/app.js',
     HTML: './src/index.html'
 };
