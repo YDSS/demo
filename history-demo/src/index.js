@@ -9,10 +9,21 @@
 
 import {createHistory} from 'history';
 
-let history = createHistory();
+let history = window.his = createHistory();
 
 let unlisten = history.listen(location => {
     console.log(location);
 });
 
-history.push('/home');
+history.listenBefore(location => {
+    console.log(location);
+    return 'hi there';
+});
+
+// history.push({
+//     pathname: '/home',
+//     search: '?a=1',
+//     state: { some: 'state'}
+// });
+
+history.push({ ...location, search: '?foo=bar'});
