@@ -15,3 +15,12 @@ export function removeTodo(todo) {
         payload: todo
     };
 }
+
+export const EDIT_TODO = 'EDIT_TODO';
+
+export function editTodo(todo) {
+    return {
+        type: EDIT_TODO,
+        payload: todo
+    };
+}

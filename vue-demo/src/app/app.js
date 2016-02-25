@@ -18,7 +18,9 @@ let vm = window.vm = new Vue({
         todos: initialState.todos,
         visibility: initialState.visibility,
         // 输入框的值
-        newTodo: ''
+        newTodo: '',
+        // 正在编辑的todo
+        editedTodo: null
     },
     components: {
         TodoList
