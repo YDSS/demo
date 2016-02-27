@@ -21,6 +21,15 @@ export const EDIT_TODO = 'EDIT_TODO';
 export function editTodo(todo) {
     return {
         type: EDIT_TODO,
-        payload: todo
+        payload: todo 
     };
+}
+
+export const COMPLETE_TODO = 'COMPLETE_TODO';
+
+export function completeTodo(todo) {
+    return {
+        type: COMPLETE_TODO,
+        payload: todo
+    }
 }
