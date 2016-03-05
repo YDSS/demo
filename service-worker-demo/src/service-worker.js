@@ -1,13 +1,5 @@
-var CACHE_VERSION = 1;
-var CURRENT_CACHES = {
-    prefetch: 'prefetch-cache-v' + CACHE_VERSION
-};
-
+// installing状态时触发, 可使用event.waitUtil block install过程
 self.addEventListener('install', function(event) {
-    let prefetch = './style.css';
-
-    console.log('Handling install event. Resources to pre-fetch:', prefetch);
-    // 
     // event.waitUntil(
         // caches.open(CURRENT_CACHES['prefetch']).then(function(cache) {
         //     cache.addAll(urlsToPrefetch.map(function(urlToPrefetch) {
@@ -18,18 +10,19 @@ self.addEventListener('install', function(event) {
         // }).catch(function(error) {
         //     console.error('Pre-fetching failed:', error);
         // })
-        fetch(prefetch)
-            .then(response => {
-                return response.text();
-            })
-                .then(text => {
-                    console.log(text);
-                    return text;
-                })
     // );
 });
 
+// service worker在activated之前触发
 self.addEventListener('activate', ev => {
-    console.log('Handling activate event.');
-    console.log(ev);
 });
+
+// 客户端请求service worker控制的域名时触发
+self.addEventListener('fetch', ev => {
+    console.log('fetch');
+    ev.respondWith(new Response('gotach!', {
+        headers: { 'Content-Type': 'text/plain' }              
+    }));
+    // return fetch(ev.request);
+});
+

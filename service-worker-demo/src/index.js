@@ -1,23 +1,26 @@
 import 'index.css';
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js?1', {
-        scope: './'
+    navigator.serviceWorker.register('service-worker.js', {
+        // 控制整个domain
+        scope: '/test/'
     }).then(function (registration) {
         var serviceWorker;
-        console.log(registration);
+
         if (registration.installing) {
             serviceWorker = registration.installing;
             document.querySelector('#kind').textContent = 'installing';
+        // 安装完成，但还为替换原先的service worker
         } else if (registration.waiting) {
             serviceWorker = registration.waiting;
             document.querySelector('#kind').textContent = 'waiting';
+        // 已生效
         } else if (registration.active) {
             serviceWorker = registration.active;
             document.querySelector('#kind').textContent = 'active';
         }
         if (serviceWorker) {
-            // logState(serviceWorker.state);
+
             serviceWorker.addEventListener('statechange', function (e) {
                 // logState(e.target.state);
             });
@@ -28,4 +31,15 @@ if ('serviceWorker' in navigator) {
     });
 } else {
     // The current browser doesn't support service workers.
+}
+
+window.onload = () => {
+    fetch('/test/test.css')
+        .then(response => {
+            return response.text();
+        })
+        .then(text => {
+            console.log(text);
+            return text;
+        });
 }
