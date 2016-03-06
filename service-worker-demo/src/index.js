@@ -1,7 +1,7 @@
 import 'index.css';
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js', {
+    navigator.serviceWorker.register('service-worker.js?2', {
         // 控制整个domain
         scope: '/test/'
     }).then(function (registration) {
@@ -34,6 +34,7 @@ if ('serviceWorker' in navigator) {
 }
 
 window.onload = () => {
+    setTimeout(() => {
     fetch('/test/test.css')
         .then(response => {
             return response.text();
@@ -42,4 +43,5 @@ window.onload = () => {
             console.log(text);
             return text;
         });
+    }, 1000);
 }
