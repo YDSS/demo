@@ -1,7 +1,7 @@
 import 'index.css';
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js?2', {
+    navigator.serviceWorker.register('service-worker.js?20', {
         // 控制整个domain
         scope: '/test/'
     }).then(function (registration) {

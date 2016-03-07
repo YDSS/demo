@@ -19,18 +19,16 @@ self.addEventListener('activate', ev => {
 // 客户端请求service worker控制的域名时触发
 self.addEventListener('fetch', ev => {
     console.log('hijack fetch');
-    console.log(ev);
-    ev.respondWith(
-        caches.match(ev.request)
-            .catch(() => fetch(ev.request))
-                .then(response => {
-                    debugger
-                    caches.open('v1').then(cache => {
-                        cache.put(ev.request, response.clone());          
-                    })
-                    return response;
-                })
-    );
+    if (ev.request.url.includes('test.css')) {
+        ev.respondWith(new Response('Hi there!', {
+            headers: {'Content-Type': 'text/css'}                           
+        }));
+    }
+    else {
+        ev.respondWith(
+            fetch(ev.request)
+        );
+    }
     // return fetch(ev.request);
 });
 
