@@ -32,3 +32,10 @@ self.addEventListener('fetch', ev => {
     // return fetch(ev.request);
 });
 
+// 接收主线程的postMessage
+self.addEventListener('message', ev => {
+    console.log('sw receive message..');
+    console.log(ev);
+
+    ev.ports[0].postMessage('Hi, hello too');
+});

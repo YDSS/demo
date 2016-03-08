@@ -1,12 +1,12 @@
-import 'index.css';
+import 'index.scss';
+import 'test.css';
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js?20', {
         // 控制整个domain
-        scope: '/test/'
+        scope: './'
     }).then(function (registration) {
         var serviceWorker;
-
         if (registration.installing) {
             serviceWorker = registration.installing;
             document.querySelector('#kind').textContent = 'installing';
@@ -20,7 +20,14 @@ if ('serviceWorker' in navigator) {
             document.querySelector('#kind').textContent = 'active';
         }
         if (serviceWorker) {
+            var channel = new MessageChannel();
+            debugger
+            channel.port1.onmessage = e => {
+                console.log('main thread receive message...');
+                console.log(e);
+            }
 
+            serviceWorker.postMessage('hello world!', '*', [channel.port2]);
             serviceWorker.addEventListener('statechange', function (e) {
                 // logState(e.target.state);
             });
@@ -35,6 +42,7 @@ if ('serviceWorker' in navigator) {
 
 window.onload = () => {
     setTimeout(() => {
+    // fetch('style.css')
     fetch('/test/test.css')
         .then(response => {
             return response.text();

@@ -2,6 +2,8 @@ var path = require('path');
 var webpack = require('webpack');
 var paths = require('./conf');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var extractTest = new ExtractTextPlugin('test/test.css');
+var extractOtherStyle = new ExtractTextPlugin('style.css');
 
 var entry = paths.ENTRY;
 
@@ -21,18 +23,20 @@ var config = {
             test: /(\.jsx|\.js)$/,
             loaders: ['babel'],
             exclude: /node_modules/
-        },{
+        }, {
             test: /\.scss$/,
-            loader: ExtractTextPlugin.extract('css!sass')
+            loader: extractOtherStyle.extract(['css', 'sass'])
         }, {
             test: /\.css$/,
-            loader: ExtractTextPlugin.extract('css')
+            loader: extractTest.extract(['css'])
         }]
     },
     plugins: [
-        new ExtractTextPlugin('style.css', {
-            allChunks: true
-        })
+        // new ExtractTextPlugin('style.css', {
+        //     allChunks: true
+        // })
+        extractTest,
+        extractOtherStyle
     ],
     resolve: {
         root: path.resolve('./src'),
