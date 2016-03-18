@@ -1,8 +1,9 @@
-var React = require('react');
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
-var App = React.createClass({
+class App extends Component {
 
-    render: function () {
+    render() {
         return (
             <div className='app'>
                 {this.props.children}
@@ -10,6 +11,6 @@ var App = React.createClass({
         );
     }
 
-});
+}
 
-module.exports = App;
+export default App;

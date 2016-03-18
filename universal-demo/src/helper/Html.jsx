@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/server';
+import conf from '../conf';
 
 class Html extends Component {
 
@@ -18,7 +19,8 @@ class Html extends Component {
                 </head>
                 <body>
                     <div id='content' dangerouslySetInnerHTML={{__html: content}}></div>
-                    <script dangerouslySetInnerHTML={{__html: `window.__data=${JSON.stringify(store.getState());}`}}/>
+                    <script dangerouslySetInnerHTML={{__html: `window.__data=${JSON.stringify(store.getState())}`}}/>
+                    <script src={`${conf.host}:${conf.webpackDevPort}/app.js`}></script>
                 </body>
             </html>
         );
