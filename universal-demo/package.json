@@ -4,7 +4,8 @@
   "description": "",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently --kill-others \"gulp\" \"node-dev ./src/register.js\""
   },
   "keywords": [],
   "author": "",
@@ -41,6 +42,7 @@
   },
   "dependencies": {
     "history": "^2.0.1",
+    "http-proxy": "^1.13.2",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-redux": "^4.4.1",

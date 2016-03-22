@@ -1,53 +1,18 @@
 import express from 'express';
+import httpProxy from 'http-proxy';
 import path from 'path';
-import React from 'react';
-import ReactDOM from 'react-dom/server';
-import {match, RouterContext} from 'react-router';
-import {Provider} from 'react-redux';
-
-import Html from './helper/Html.jsx';
-import route from './route';
-import createHistory from 'react-router/lib/createMemoryHistory';
-import createStore from './redux/store';
-import reducer from './redux/reducer/reducer';
+import {router as count} from './api/count';
+import {router as pageRouter} from './page_router';
 
 const app = express();
+const proxy = httpProxy.createProxyServer({});
 
 app.use(express.static(path.join(__dirname, './dist')));
 
-app.use(function (req, res) {
-    var history = createHistory(req.originalUrl);
-
-    match({
-        location: req.originalUrl,
-        routes: route,
-        history 
-    }, (err, redirectLocation, renderProps) => {
-        // 匹配出错
-        if (err) {
-            res.status(500);
-            res.send('err: ' + err.message);
-        }
-        // 匹配成功
-        else if (renderProps) {
-            const store = createStore(reducer);
-            const component = (
-                <Provider store={store} key='provider'>
-                    <RouterContext {...renderProps} />
-                </Provider>
-            );
-
-            const template = ReactDOM.renderToString(<Html component={component} store={store}/>);
-
-            res.send('<!doctype html>\n' + template);
-        }
-        // 404
-        else {
-            res.status(404);
-            res.send('Not found');
-        }
-    });
-});
+// api接口
+app.use('/api', count);
+// server端渲染页面的路由
+app.use(pageRouter);
 
 app.listen(8081);
 console.log('server start on 8081');

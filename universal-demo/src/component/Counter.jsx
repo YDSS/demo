@@ -1,24 +1,12 @@
-import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
-import {increment} from '../redux/reducer/counter';
+import React, {PropTypes} from 'react';
 
-class Counter extends Component {
-    static propTypes = {
-        increment: PropTypes.func,
-        counter: PropTypes.object
-    }
+const Counter = (props) => 
+    <span className='counter' onClick={props.increment}>{props.count}</span>
 
-    render() {
-        const {count, increment} = this.props;
-        
-        return (
-            <span className='counter' onClick={increment}>{count}</span>
-        );
-    }
-
+Counter.propTypes = {
+    increment: PropTypes.func.isRequired,
+    count: PropTypes.number.isRequired
 }
 
-export default connect(
-    state => ({count: state.counter.count}),
-    {increment}
-)(Counter);
+export default Counter;
+
