@@ -31,6 +31,11 @@ var config = {
     plugins: [
         new ExtractTextPlugin('style.css', {
             allChunks: true
+        }),
+        new webpack.DefinePlugin({
+            __CLIENT__: true,
+            __DEVELOPMENT__: true,
+            __DEVTOOLS__: true
         })
     ],
     resolve: {

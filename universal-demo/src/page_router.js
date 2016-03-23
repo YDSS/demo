@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 import {match, RouterContext} from 'react-router';
 import {Provider} from 'react-redux';
+import {ReduxAsyncConnect, loadOnServer} from 'redux-async-connect';
 
 import Html from './helper/Html.jsx';
 import route from './route';
@@ -13,7 +14,7 @@ import reducer from './redux/reducer/reducer';
 const router = express.Router();
 
 router.use((req, res) => {
-    var history = createHistory(req.originalUrl);
+    const history = createHistory(req.originalUrl);
 
     match({
         location: req.originalUrl,
@@ -28,15 +29,20 @@ router.use((req, res) => {
         // 匹配成功
         else if (renderProps) {
             const store = createStore(reducer);
-            const component = (
-                <Provider store={store} key='provider'>
-                    <RouterContext {...renderProps} />
-                </Provider>
-            );
 
-            const template = ReactDOM.renderToString(<Html component={component} store={store}/>);
+            loadOnServer(renderProps, store).then(() => {
+                const component = (
+                    <Provider store={store} key='provider'>
+                        <div>
+                            <ReduxAsyncConnect {...renderProps} />
+                        </div>
+                    </Provider>
+                );
 
-            res.send('<!doctype html>\n' + template);
+                const template = ReactDOM.renderToString(<Html component={component} store={store}/>);
+
+                res.send('<!doctype html>\n' + template);
+            });
         }
         // 404
         else {

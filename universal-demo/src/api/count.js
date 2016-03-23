@@ -2,7 +2,7 @@ import express from 'express';
 
 const router = express.Router();
 // 记录传递的值，本来应该放在数据库里，这里简化
-let count = 0;
+let count = 1;
 
 // 获取当前计数
 router.get('/count', (req, res) => {
