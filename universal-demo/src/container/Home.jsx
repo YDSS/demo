@@ -4,14 +4,17 @@ import {connect} from 'react-redux';
 import Counter from '../component/Counter.jsx';
 import {increment, getCount} from '../redux/reducer/counter';
 
-//@connect(
-//    state => ({count: state.counter.count}),
-//    {increment, getCount}
-//)
 @asyncConnect([{
     // count: testAsync
-    count: (params, helpers) => Promise.resolve(10)
+    //count: (params, helpers) => Promise.resolve(10)
+    promise: ({store: {dispatch}}) => {
+        return dispatch(getCount());
+    }
 }])
+@connect(
+    state => ({count: state.counter.count}),
+    {increment}
+)
 class Home extends Component {
 
     // componentWillMount() {
@@ -31,13 +34,4 @@ class Home extends Component {
     }
 }
 
-function testAsync(params, helpers) {
-    console.log(params);
-    return Promise.resolve({count: 1});
-}
-
-// export default Home;
-export default connect(
-    state => ({count: state.counter.count}),
-    {increment, getCount}
-)(Home);
+export default Home;

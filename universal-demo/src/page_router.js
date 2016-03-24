@@ -30,7 +30,7 @@ router.use((req, res) => {
         else if (renderProps) {
             const store = createStore(reducer);
 
-            loadOnServer(renderProps, store).then(() => {
+            loadOnServer({...renderProps, store}).then(() => {
                 const component = (
                     <Provider store={store} key='provider'>
                         <div>

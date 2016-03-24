@@ -1,9 +1,10 @@
+import conf from '../../conf.js';
 import {CALL_API} from 'redux-api-middleware';
 
 const initialState = {
     count: 0
 };
-const apiPrefix = '/api';
+const apiPrefix = global.__CLIENT__ ? '/api' : `${conf.host}:${conf.serverPort}/api`;
 
 export default function counter(state = initialState, action) {
     switch (action.type) {

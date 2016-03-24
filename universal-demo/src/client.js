@@ -33,7 +33,7 @@ if (__CLIENT__ && __DEVELOPMENT__ && __DEVTOOLS__) {
     ReactDOM.render(
         <Provider store={store} key='provider'>
             <div>
-                {component},
+                {component}
                 <DevTool/>
             </div>
         </Provider>,
