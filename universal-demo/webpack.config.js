@@ -20,7 +20,7 @@ var config = {
             test: /(\.jsx|\.js)$/,
             loaders: ['babel'],
             exclude: /node_modules/
-        },{
+        }, {
             test: /\.scss$/,
             loader: ExtractTextPlugin.extract('css!sass')
         }, {
