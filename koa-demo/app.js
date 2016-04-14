@@ -31,20 +31,28 @@ app.use(function *(next){
     console.log('>> one');
     yield next;
     console.log('<< one');
+    this.body = 'Hello World';
 });
 
-app.use(function *() {
-    console.log('>> two');
-    this.body = 'two';
-    // yield next;
-    console.log('<< two');
-});
-
-app.use(function *(next){
-    console.log('>> three');
+// test middleware.call to compose multiple middlewares
+let midware1 = function *(next) {
+    console.log('>> midware1');
     yield next;
-    console.log('<< three');
-});
+    console.log('<< midware1');
+};
+
+let midware2 = function *(next) {
+    console.log('>> midware2');
+    yield next;
+    console.log('<< midware2');
+};
+
+let all = function *(next) {
+    yield midware1.call(this, midware2.call(this, next));
+}
+
+app.use(all);
+    
 // error handler
 // if (app.env.development) {
 app.on('error', (err, cxt) => {
