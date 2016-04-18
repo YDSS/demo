@@ -1,4 +1,5 @@
 import koa from 'koa';
+import notifier from 'node-notifier';
 
 const app = koa();
 
@@ -6,7 +7,7 @@ const app = koa();
 app.keys = ['hi there', 'ydss'];
 
 // set context for global use in lifecycle
-app.context.name = 'YDSS';
+// app.context.name = 'YDSS';
 
 // app.use(function *(next) {
 //     let start = new Date;  
