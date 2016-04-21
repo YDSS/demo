@@ -1,18 +1,58 @@
-let $output = document.getElementById('output');
+/**
+ * 测试promise的then(onFullfilled, onReject)第一个参数onFullfilled中的异常
+ * 能否被onReject接住
+ */
+// function trim(str) {
+//     if (typeof str !== 'string') {
+//         throw new TypeError('Must be a string!');
+//     }
+// 
+//     return new Promise((resolve, reject) => {
+//         resolve(str.replace(/(^\s*)|(\s*$)/g, ''));
+//     });
+// }
+// 
+// trim(1234)
+//     .then(ret => {
+//         console.log(ret);
+//     })
+//     .catch(err => {
+//         console.log(err);   
+//     });
 
-// 测试在promise结构体中抛出error是否真能抛出去
-function testThrowErrorInPromise() {
-    let p = Promise.resolve();
+/**
+ * end
+ */
 
-    p.then(() => {
-        throw new Error('hahhah');
-    })
-        .catch(err => {
-            console.log('error in catch: ' + err.message);
-            throw err;
-        });
+/**
+ * 测试promise结构体中同步异步混杂
+ */
 
-    console.log('conutine...');
+// function test() {
+//     return new Promise((resolve, reject) => {
+//         var i = 0;
+// 
+//         setTimeout(() => {
+//             i ++;
+//         }, 100);
+// 
+//         resolve(i);
+//     });
+// }
+// 
+// test().then((ret) => console.log(ret));
+
+/**
+ * 测试resolve或reject后，之后的代码会不会执行
+ */
+function test() {
+    return new Promise((resolve, reject) => {
+        console.log('before resolve');
+        resolve(1);
+        // return resolve(1);
+
+        console.log('after resolve');
+    });
 }
 
-testThrowErrorInPromise();
+test();
