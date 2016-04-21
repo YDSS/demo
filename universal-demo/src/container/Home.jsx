@@ -11,7 +11,6 @@ import {getText} from '../redux/reducer/text';
     // count: testAsync
     //count: (params, helpers) => Promise.resolve(10)
     promise: ({store: {dispatch}}) => {
-        console.log('count');
         return dispatch(getCount())
             .then(() => {
                 return dispatch(getText());   
@@ -24,12 +23,6 @@ import {getText} from '../redux/reducer/text';
 )
 class Home extends Component {
 
-    // componentWillMount() {
-    //     const {getCount} = this.props;
-
-    //     getCount();
-    // }
-
     render() {
         const {count, increment, text} = this.props;
 
@@ -37,7 +30,10 @@ class Home extends Component {
             <div className='home'>
                 <Link to='/about'>ABOUT</Link> 
                 <br />
+                <br />
                 <Counter count={count} increment={increment}/>
+                <br />
+                <br />
                 <Text text={text}/>
             </div>
         );

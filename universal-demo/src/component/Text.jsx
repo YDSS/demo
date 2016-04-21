@@ -2,9 +2,7 @@ import React from 'react';
 import marked from 'marked';
 
 const Text = (props) => {
-    let __html = marked(props.text);
-
-    return <p dangerouslySetInnerHTML={__html}></p>;
+    return <p dangerouslySetInnerHTML={{__html: marked(props.text)}}></p>;
 };
 
 export default Text;
