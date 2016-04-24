@@ -1,0 +1,29 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    height: 1000px;
+}
+
+.sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0px;
+    padding: 50px 0;
+    text-align: center;
+    background: #F6D565;
+}
+
+.start {
+    margin-top: 200px;
+    text-align: center;
+}
+
+.middle {
+    margin-top: 600px;
+    text-align: center;
+}
+
+.end {
+    margin-top: 1000px;
+    text-align: center;
+}
