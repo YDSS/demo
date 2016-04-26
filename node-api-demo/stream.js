@@ -2,12 +2,12 @@ const fs = require('fs');
 
 var rr = fs.createReadStream('./fs.txt');
 
-rr.on('readable', () => {
-    console.log('file readable');
-});
+rr.pipe(process.stdout);
 
-rr.on('data', (chunk) => {
-    console.log('chunk: ' + chunk);
+rr.on('readable', () => {
+    // rr.unpipe();
+    console.log('file readable');
+
 });
 
 rr.on('end', () => {

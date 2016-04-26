@@ -5,9 +5,10 @@ int getSubsequenceSum(int arr[], int left, int right);
 int max(int a, int b, int c);
 
 int main() {
-    int arr = [-3, 2, 4, -4, 1, -5, 7, -10];
+    static int arr[8] = {-3, 2, 4, -4, 1, -5, 7, -10};
 
-    subsequence_sum(arr, 8);
+    int ret = subsequence_sum(arr, 8);
+    printf("%d", ret);
 }
 
 int subsequence_sum(int arr[], int N) {
