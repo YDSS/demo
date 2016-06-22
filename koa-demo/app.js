@@ -1,66 +1,68 @@
-import koa from 'koa';
-import notifier from 'node-notifier';
+var debug = require('debug')('koa-demo');
+var koa = require('koa');
+//配置文件
+var config = require('./config/config');
 
-const app = koa();
-
-// set signed cookie
-app.keys = ['hi there', 'ydss'];
-
-// set context for global use in lifecycle
-// app.context.name = 'YDSS';
-
-// app.use(function *(next) {
-//     let start = new Date;  
-//     yield next;
-//     let ms = new Date - start;
-// 
-//     console.log('x-response-time');
-//     this.set('X-Response-Time', ms + 'ms');
-// });
-// 
-// app.use(function *(next) {
-//     yield next;
-// 
-//     console.log('test order');
-// });
-// 
-// app.use(function *() {
-//     this.cookies.set('name', 'tobi');
-//     this.body = 'Hello World';
-// });
+var app = koa();
 app.use(function *(next){
-    console.log('>> one');
+    //config 注入中间件，方便调用配置信息
+    if(!this.config){
+        this.config = config;
+    }
     yield next;
-    console.log('<< one');
-    this.body = 'Hello World';
 });
 
-// test middleware.call to compose multiple middlewares
-let midware1 = function *(next) {
-    console.log('>> midware1');
-    yield next;
-    console.log('<< midware1');
-};
-
-let midware2 = function *(next) {
-    console.log('>> midware2');
-    yield next;
-    console.log('<< midware2');
-};
-
-let all = function *(next) {
-    yield midware1.call(this, midware2.call(this, next));
-}
-
-app.use(all);
-    
-// error handler
-// if (app.env.development) {
-app.on('error', (err, cxt) => {
-    console.log(err);
+//log记录
+var Logger = require('mini-logger');
+var logger = Logger({
+    dir: config.logDir,
+    format: 'YYYY-MM-DD-[{category}][.log]'
 });
-//}
 
-app.listen(3000);
-console.log('server start on port 3000');
+//router use : this.logger.error(new Error(''))
+app.context.logger = logger;
+
+var onerror = require('koa-onerror');
+onerror(app);
+
+//xtemplate对koa的适配
+var xtplApp = require('xtpl/lib/koa');
+//xtemplate模板渲染
+xtplApp(app,{
+    //配置模板目录
+    views: config.viewDir
+});
+
+
+
+
+var session = require('koa-session');
+app.use(session(app));
+
+
+//post body 解析
+var bodyParser = require('koa-bodyparser');
+app.use(bodyParser());
+//数据校验
+var validator = require('koa-validator');
+app.use(validator());
+
+//静态文件cache
+var staticCache = require('koa-static-cache');
+var staticDir = config.staticDir;
+app.use(staticCache(staticDir+'/js'));
+app.use(staticCache(staticDir+'/css'));
+
+//路由
+var router = require('koa-router');
+app.use(router(app));
+
+//应用路由
+var appRouter = require('./router/index');
+appRouter(app);
+
+app.listen(config.port);
+console.log('listening on port %s',config.port);
+
+module.exports = app;
 
