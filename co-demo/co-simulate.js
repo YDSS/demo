@@ -13,14 +13,28 @@ module.exports = function (gen) {
 
         if (!r.done) {
             let val = r.value;
-            if (typeof val !== 'function') return next(val);
 
-            ret = r.value();
-            next(ret);
+            if (isPromise(val)) {
+                val.then(next);
+            }
+            else if (isFunc(val)) {
+                ret = val();
+                next(ret);
+            }
+            else {
+                return next(val);
+            }
         }
         else {
             return ret;
         }
     }
-}
+};
         
+function isPromise(p) {
+    return p.then && typeof p.then === 'function';
+}
+
+function isFunc(f) {
+    return typeof f === 'function';
+}

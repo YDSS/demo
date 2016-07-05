@@ -11,7 +11,11 @@ co(function* () {
 });
 
 function testA() {
-    return 4;
+    return new Promise((res, rej) => {
+        setTimeout(() => {
+            res(4);
+        }, 1000);
+    });
 }
 
 function testB() {

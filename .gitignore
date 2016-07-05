@@ -4,3 +4,4 @@ example-from-github/
 dist/
 *.out
 *.o
+.idea/
