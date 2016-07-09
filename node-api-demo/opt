@@ -1,0 +1,14 @@
+#!/bin/sh
+# test getopts
+while getopts 'a:b:c' args
+do
+    case $args in
+        a) echo 'opt a args:'$OPTARG ;;
+        b) echo 'opt b:'$OPTARG ;;
+        c) echo 'opt c' ;;
+        ?) 
+            echo $args 'not matched' 
+            exit 1
+            ;;
+    esac
+done

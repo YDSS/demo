@@ -17,7 +17,7 @@ let vm = new Vue({
                 let flag = true;
 
                 this.leftChecks.map(item => {
-                    item === e && flag = false;
+                    if (item === e) flag = false;
                 });
 
                 return flag;
@@ -29,7 +29,7 @@ let vm = new Vue({
                 let flag = true;
 
                 this.rightChecks.map(item => {
-                    item === e && flag = false;
+                    if (item === e) flag = false;
                 });
 
                 return flag;
