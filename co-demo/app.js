@@ -1,29 +1,42 @@
 'use strict';
 
+const fs = require('fs');
 const co = require('co');
+const thunkify = require('thunkify');
 const request = require('request');
 
-// test exception flow
-function* funA() {
-    console.log(a);
-    return 1;
-}
-
-function* funB() {
-    return 2;
-}
-
+let readFile = thunkify(fs.readFile);
+let execFile = thunkify(require('child_process').execFile);
+// test yield async func
 co(function* () {
-    let a = yield funA(); // line 1
-
-    // console.log(c); // line 2
-
-    let b = yield funB(); // line 3
-}).then(res => {
-    console.log('res');
-}, err => {
-    console.log('err: ' + err);
+    try {
+        let c = yield execFile('./bin/test');
+        console.log(c);
+    } catch (e) {
+        console.log(e);
+    }
 });
+// test exception flow
+// function* funA() {
+//     console.log(a);
+//     return 1;
+//     console.log(a);
+// 
+// function* funB() {
+//     return 2;
+// }
+// 
+// co(function* () {
+//     let a = yield funA(); // line 1
+// 
+//     // console.log(c); // line 2
+// 
+//     let b = yield funB(); // line 3
+// }).then(res => {
+//     console.log('res');
+// }, err => {
+//     console.log('err: ' + err);
+// });
 
 /**
  * delay promise 
