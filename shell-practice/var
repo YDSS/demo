@@ -1,0 +1,10 @@
+#!/bin/sh
+A=''
+B='13'
+
+echo $A
+if [ -n A ];then
+    echo 'A'
+elif [ -n B ];then
+    echo 'B'
+fi
