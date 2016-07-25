@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+/**
+ * @file 切换当前git的user信息
+ * @author lanzhui
+ */
+'use strict';
+
+const fs = require('fs');
+const program = require('commander');
+
+const userInfo = [{
+    user: 'YDSS',
+    email: 'y.dsheng10@gmail.com'
+}, {
+    user: 'dongsheng.yds',
+    email: 'dongsheng.yds@alibaba-inc.com'
+}];
+
+program
+    .version('1.0')
+    .usage('[options] <param ...>')
+    .option('-n, --name <n>', 'user name')
+    .parse(process.argv);
+
+let name = program.name;
+
