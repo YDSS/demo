@@ -5,22 +5,34 @@
  */
 'use strict';
 
-const fs = require('fs');
+const exec = require('child_process').execSync;
+const exec1 = require('child_process').exec;
 const program = require('commander');
 
-const userInfo = [{
-    user: 'YDSS',
-    email: 'y.dsheng10@gmail.com'
-}, {
-    user: 'dongsheng.yds',
-    email: 'dongsheng.yds@alibaba-inc.com'
-}];
+const userInfo = {
+    'ydss': {
+        name: 'YDSS',
+        email: 'y.dsheng10@gmail.com'
+    }, 
+    'lanzhui': {
+        name: 'dongsheng.yds',
+        email: 'dongsheng.yds@alibaba-inc.com'
+    }
+};
 
 program
     .version('1.0')
     .usage('[options] <param ...>')
-    .option('-n, --name <n>', 'user name')
+    .option('-u, --user <n>', 'user name')
     .parse(process.argv);
 
-let name = program.name;
+let user = program.user;
+let account = userInfo[user];
 
+if (account) {
+    exec1(`git config --global user.name ${account.name}`); 
+    exec(`git config --global user.email ${account.email}`); 
+}
+else {
+    console.log('user not matched!');
+}
