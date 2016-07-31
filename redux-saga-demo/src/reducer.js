@@ -6,10 +6,10 @@ const counter = handleActions({
         return { ...state };
     },
     ['counter/increment'](state) {
-        return { ...state, count: state.count++ };
+        return { ...state, count: ++state.count };
     },
     ['counter/decrement'](state) {
-        return { ...state, count: state.count-- };
+        return { ...state, count: --state.count };
     }
 }, {
     count: 0
