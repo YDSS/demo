@@ -4,6 +4,7 @@ const path = require('path');
 const koa = require('koa');
 const serve = require('koa-serve');
 const logger = require('koa-logger');
+const koaBody = require('koa-body');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackConf = require('../webpack.config');
@@ -15,6 +16,8 @@ const port = 3000;
 const env = process.env['NODE_ENV'];
 
 app.use(serve('public'));
+// body parser
+app.use(koaBody());
 
 if (env === 'development') {
     // 编译webpack

@@ -29,14 +29,15 @@ class Result {
 
     /**
      * 在返回结果中添加错误信息，此操作会导致success变化
-     * @param {number} errCode 错误码
-     * @param {string?} errMsg 错误信息
+     * @param {Object} param
+     *   - {number} errCode 错误码
+     *   - {string?} errMsg 错误信息
      */
-    addError(errCode, errMsg) {
+    addError(param) {
         this.success = false;
-        this.errCode = errCode;
-        if (errMsg) {
-            this.errMsg = errMsg;
+        this.errCode = param.errCode;
+        if (param.errMsg) {
+            this.errMsg = param.errMsg;
         }
     }
 
