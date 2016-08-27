@@ -7,15 +7,28 @@ const request = require('request');
 
 let readFile = thunkify(fs.readFile);
 let execFile = thunkify(require('child_process').execFile);
+
+function prom(num) {
+    return new Promise((res, rej) => {
+        setTimeout(() => {
+            res(num);
+        }, 1000);
+    });
+}
+
 // test yield async func
 co(function* () {
     try {
-        let c = yield execFile('./bin/test');
-        console.log(c);
+        let a = yield prom(1);
+        let b = yield prom(2);
+        return a;
     } catch (e) {
         console.log(e);
     }
-});
+})
+    .then(ret => {
+        console.log(ret);  
+    });
 // test exception flow
 // function* funA() {
 //     console.log(a);
@@ -61,7 +74,7 @@ co(function* () {
 //     console.log('%d ; %d ; %d', a, b, c)
 // });
 
-coFn();
+// coFn();
 /**
  * delay promise 
  */

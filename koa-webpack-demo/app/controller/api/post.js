@@ -160,47 +160,4 @@ exports.updatePost = function* updatePost() {
     }
 
     this.body = result.getModel();
-}
-
-// router.post('/update', (req, res, next) => {
-//     const updateArticle = articleAction.updateArticle;
-//     let {id, raw, updatedAt} = req.body;
-//     raw = decodeURIComponent(raw);
-//
-//     updateArticle({
-//         id,
-//         raw,
-//         updatedAt
-//     })
-//         .then(ret => {
-//             res.send({
-//                 errno: responseState.OK,
-//                 data: ret
-//             });
-//         }, err => {
-//             res.send({
-//                 errno: responseState.SQL_ERROR,
-//                 data: err.message
-//             });
-//         });
-// });
-//
-// router.get('/del', (req, res, next) => {
-//     const delArticle = articleAction.delArticle;
-//     let articleId = req.query.id;
-//
-//     delArticle(articleId)
-//         .then(ret => {
-//             res.send({
-//                 errno: responseState.OK,
-//                 data: ret
-//             });
-//         }, err => {
-//             res.send({
-//                 errno: responseState.SQL_ERROR,
-//                 data: err.message
-//             });
-//         });
-// });
-//
-// export {router as article};
+};
