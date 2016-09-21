@@ -1,0 +1,19 @@
+{
+  "name": "test-unit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "chai": "^3.5.0"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.5",
+    "mocha": "^3.0.2"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha 'test/spec/*.js' --timeout 20000",
+    "cover": "istanbul cover ./node_modules/mocha/bin/mocha -- -u exports --reporter spec --timeout 20000"
+  },
+  "author": "",
+  "license": "ISC"
+}
