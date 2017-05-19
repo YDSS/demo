@@ -1,0 +1,109 @@
+/**
+ * @file 把一个数转成中文大写的写法
+ *  如123.33 => 一百二十三元三角三分
+ */
+
+let hanUnits = ['', '十', '百', '千', '万', '亿', '兆'];
+let hanNums = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+let decimalsUnits = ['角', '分', '厘'];
+
+function numsToHan(num) {
+    let type = typeof num;
+    if (type !== 'string' && type !== 'number') throw new Error('wrong type, only number or string');
+
+    // let hanUnits = ['', '十', '百', '千', '万', '亿', '兆'];
+    if (type === 'string') {
+        let tmp = parseFloat(num);
+        if (Number.isNaN(tmp)) throw new Error('input is not a valid number');
+    }
+    // cast number to string
+    else {
+        num += '';
+    }
+
+    let decimalsHan = '';
+    let integerPart;
+    let splits = num.split('.');
+    // if has decimals
+    if (num.indexOf('.') > -1) {
+        decimalsHan = handleDecimals(splits[1]);
+    }
+    let integerHan = handleInteger(splits[0]);
+
+    return `${integerHan}元${decimalsHan}`;
+
+    // let remainer;
+    // let ret = '';
+    // for (let i = 0; num > 0; i++) {
+    //     // 每次除以10取余
+    //     remainer = num % 10;
+    //     // num去掉最后一位
+    //     num = Math.floor(num / 10);
+    //     // 个位为0，不写出来
+    //     if (i === 0 && remainer === 0) continue;
+    //     // 其他位为0，不写单位
+    //     if (remainer === 0) {
+    //         ret = `零${ret}`;
+    //         continue;
+    //     }
+    //
+    //     ret = `${hanNums[remainer - 1]}${getUnit(i)}` + ret;
+    //     console.log(remainer, num, getUnit(i));
+    // }
+    //
+    // console.log(ret);
+}
+
+function handleInteger(str) {
+    let nums = str.split('').reverse();
+    let ret = '';
+    let spacing = 4; // 千，万，亿这样的位数，升位的跨度，0位到千位为4，千位到万位是4，之后依次加1
+    // 千位单独计算
+    ret = transSpacingNumToHan(nums.splice(0, spacing), spacing, true) + ret;
+
+    while (nums.length > 0) {
+        ret = transSpacingNumToHan(nums.splice(0, spacing), spacing) + ret;
+        spacing++;
+    }
+
+    return ret;
+}
+
+function transSpacingNumToHan(arr, spacing, isThousand) {
+    let ret = '';
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] == 0) {
+            ret = handleZero(i) + ret;
+            continue;
+        }
+
+        ret = hanNums[arr[i]] + hanUnits[i] + ret;
+    }
+
+    return `${ret}${isThousand ? '' : hanUnits[spacing]}`;
+}
+
+function handleZero(i) {
+    if (i > 0) {
+        return hanNums[0];
+    }
+
+    return '';
+}
+
+function handleDecimals(str) {
+    let nums = str.split('');
+    let ret = '';
+    for (let i = 0; i < nums.length; i++) {
+        if (i >= decimalsUnits.length) {
+          break;
+        }
+        if (nums[i] != 0) {
+            ret += `${hanNums[nums[i]]}${decimalsUnits[i]}`;
+        }
+    }
+
+    return ret;
+}
+
+console.log(numsToHan('120345.2013'));
