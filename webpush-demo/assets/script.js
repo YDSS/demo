@@ -7,6 +7,7 @@
         navigator.serviceWorker.ready.then(reg => {
             requestApplicationServerKey().then(key => {
                 if (key) {
+                    console.log(`applicationServerKey: ${key}`)
                     reg.pushManager.subscribe({
                         userVisibleOnly: true,
                         applicationServerKey: key
@@ -15,16 +16,26 @@
                             log('got subscription!');
                             let endpoint = subscription.endpoint;
                             log(`endpoint: ${endpoint}`);
-                            let key = subscription.getKey('p256dh');
-                            log(`key: ${key}`);
+                            let p256dh = subscription.getKey('p256dh');
+                            log(`p256dh: ${p256dh}`);
+                            let auth = subscription.getKey('auth');
+                            log(`auth: ${auth}`);
 
                             postPubKey({
                                 endpoint: endpoint,
-                                key: key
+                                p256dh: p256dh,
+                                auth: auth
                             })
                                 .then(ret => {
 
                                 })
+                        }, err => {
+                            console.log('subscribe error:');
+                            console.log(err);
+                        })
+                        .catch(err => {
+                            console.log('subscribe catch error:');
+                            console.log(err);
                         });
                 }
                 else {
@@ -39,16 +50,18 @@
     // postPubKey('1234456');
 
     function requestApplicationServerKey() {
-        return fetch('/appServerKey', {
+        return fetch('/vapidPublicKey', {
             method: 'GET'
         }).then(response => response.json())
         .then(ret => {
-            if (ret.sucess) {
-                return ret.key;
+            if (ret.success) {
+                let convertedVapidKey = urlBase64ToUint8Array(ret.vapidPublicKey);
+                log(`convertedVapidKey: ${convertedVapidKey}`);
+                return convertedVapidKey;
             }
 
             return null;
-        })
+        });
     }
 
     function postPubKey(data) {
@@ -85,6 +98,23 @@
                 log(`<p>key: ${data.key}, endpoint: ${data.endpoint}, response: ${ret}`);
                 return ret;
             });
+    }
+
+    // When using your VAPID key in your web app,
+    // you'll need to convert the URL safe base64 string to a Uint8Array to pass into the subscribe call
+    function urlBase64ToUint8Array(base64String) {
+      const padding = '='.repeat((4 - base64String.length % 4) % 4);
+      const base64 = (base64String + padding)
+        .replace(/\-/g, '+')
+        .replace(/_/g, '/');
+
+      const rawData = window.atob(base64);
+      const outputArray = new Uint8Array(rawData.length);
+
+      for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+      }
+      return outputArray;
     }
 
     function log(str) {

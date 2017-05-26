@@ -12,6 +12,19 @@ const port = 8888;
 // generate webpush keys
 const webpush = require('web-push');
 const vapidKeys = webpush.generateVAPIDKeys();
+webpush.setVapidDetails(
+  'mailto:y.dsheng10@gmail.com',
+  vapidKeys.publicKey,
+  vapidKeys.privateKey
+);
+const pushSubscription = {
+  endpoint: '',
+  keys: {
+    auth: '',
+    p256dh: ''
+  }
+};
+const vapidPublicKey = vapidKeys.publicKey;
 
 app.use(serve('.'));
 app.use(koaBody());
@@ -25,10 +38,19 @@ router.post('/pubKey', async function (ctx, next) {
     // }
 });
 
-router.get('/appServerKey', async function (ctx, next) {
+router.get('/vapidPublicKey', async function (ctx, next) {
+    ctx.type = 'application/json';
+    ctx.body = JSON.stringify({
+        success: true,
+        vapidPublicKey: vapidPublicKey
+    });
+});
 
-})
-
+app
+    .use(router.routes())
+    .use(router.allowedMethods());
+app.listen(port);
+console.log(`server start at port ${port}`);
 
 async function storePubKey(ctx) {
     let body = ctx.request.body;
@@ -45,6 +67,3 @@ async function storePubKey(ctx) {
 
     return success;
 }
-
-app.listen(port);
-console.log(`server start at port ${port}`);
